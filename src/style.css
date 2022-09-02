@@ -1,0 +1,129 @@
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+header {
+  background-color: black;
+  height: fit-content;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+#headerWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  margin-left: 15px;
+}
+#headerWrapper > * {
+  margin: 0;
+}
+
+#cityWrapper {
+  display: flex;
+  font-size: 3rem;
+  align-items: center;
+  gap: 15px;
+}
+#cityWrapper > * {
+  margin: 0;
+}
+#temperature {
+  font-size: 7rem;
+}
+
+#weatherRow {
+  display: flex;
+  border: 1pt solid black;
+  align-items: left;
+  justify-content: left;
+  gap: 20px;
+  font-size: 12pt;
+}
+#inputWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  justify-content: end;
+  height: 100%;
+  margin-right: 15px;
+}
+
+#inputRow {
+  display: flex;
+  justify-content: end;
+  height: 50px;
+}
+input {
+  width: 75%;
+}
+
+#weatherRow > * > * {
+  margin: 0;
+}
+
+section {
+  height: 80%;
+  background-color: white;
+  margin: 0;
+  display: grid;
+}
+
+#day_forecast {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 15px;
+}
+.dailyForecastBox {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 1pt solid black;
+  color: white;
+  background-color: black;
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  margin-left: 15px;
+  gap: 10px;
+}
+
+.tempRainContainer {
+  display: flex;
+  gap: 15px;
+}
+
+.dailyForecastBox > * {
+  margin: 0;
+}
+.tempRainContainer > *,
+.tempRainContainer > * > * {
+  margin: 0;
+}
+
+.time {
+  font-size: 2.5rem;
+}
+.temp {
+  font-size: 1.5rem;
+}
+.rain {
+  font-size: 1.5rem;
+}

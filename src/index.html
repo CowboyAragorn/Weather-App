@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+  </head>
+  <body>
+    <header>
+      <div id="headerWrapper">
+        <div id="cityWrapper">
+          <p id="city"></p>
+        </div>
+        <p id="temperature"></p>
+        <div id="weatherWrapper">
+          <div id="weatherRow">
+            <div>
+              <h2>Humidity</h2>
+              <p id="humidity"></p>
+            </div>
+            <div>
+              <h2>Feels Like</h2>
+              <p id="feels_like"></p>
+            </div>
+            <div>
+              <h2>Weather</h2>
+              <p id="weather"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="inputWrapper">
+        <div id="inputRow">
+          <input type="text" id="textInput" placeholder="Enter a city" />
+          <button id="submitBtn">Submit</button>
+        </div>
+      </div>
+    </header>
+    <section>
+      <div id="day_forecast">
+        <article class="dailyForecastBox">
+          <h2 id="time0" class="time"></h2>
+          <!--<h2>Temperature</h2> -->
+          <div class="tempRainContainer">
+            <div class="forecastDetailsFlex">
+              <h2>Temperature</h2>
+              <p id="temp0" class="temp"></p>
+            </div>
+            <div class="forecastDetailsFlex">
+              <h2>Chance of Rain</h2>
+              <p id="rain0" class="rain"></p>
+            </div>
+          </div>
+        </article>
+        <article class="dailyForecastBox">
+          <h2 id="time1" class="time"></h2>
+          <div class="tempRainContainer">
+            <div class="forecastDetailsFlex">
+              <h2>Temperature</h2>
+              <p id="temp1" class="temp"></p>
+            </div>
+            <div class="forecastDetailsFlex">
+              <h2>Chance of Rain</h2>
+              <p id="rain1" class="rain"></p>
+            </div>
+          </div>
+        </article>
+        <article class="dailyForecastBox">
+          <h2 id="time2" class="time"></h2>
+          <div class="tempRainContainer">
+            <div class="forecastDetailsFlex">
+              <h2>Temperature</h2>
+              <p id="temp2" class="temp"></p>
+            </div>
+            <div class="forecastDetailsFlex">
+              <h2>Chance of Rain</h2>
+              <p id="rain2" class="rain"></p>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div id="week_forecast"></div>
+    </section>
+    <script src="main.js"></script>
+  </body>
+</html>
