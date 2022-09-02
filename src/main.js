@@ -6,16 +6,11 @@ async function getCurrentWeather(currentCity) {
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     currentCity +
     "&units=imperial&appid=3dc68dfc31905e08624208e02dc62e0e";
-  const response = await fetch(
-    //"https://api.openweathermap.org/data/2.5/weather?q=Tampa&&units=imperial&appid=3dc68dfc31905e08624208e02dc62e0e"
-    apiLink,
-    { mode: "cors" }
-  );
+  const response = await fetch(apiLink, { mode: "cors" });
   console.log(response);
   const weatherData = await response.json();
   console.log(weatherData);
   displayWeather(weatherData);
-  //getMap(weatherData);
 }
 
 //display the weather on the DOM//
@@ -46,6 +41,7 @@ function changeCity() {
   const textInput = document.querySelector("#textInput");
   let currentCity = textInput.value;
   getCurrentWeather(currentCity);
+  getWeatherForecast(currentCity);
 }
 
 //assign change city to the submit button//
@@ -54,16 +50,16 @@ function assignSubmitBtn() {
   submitBtn.addEventListener("click", changeCity);
 }
 
-async function getWeatherForecast() {
-  const response = await fetch(
-    "https://api.openweathermap.org/data/2.5/forecast?q=Tampa&&units=imperial&appid=3dc68dfc31905e08624208e02dc62e0e",
-    { mode: "cors" }
-  );
+async function getWeatherForecast(currentCity) {
+  let apiLink =
+    "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    currentCity +
+    "&&units=imperial&appid=3dc68dfc31905e08624208e02dc62e0e";
+  const response = await fetch(apiLink, { mode: "cors" });
   const forecastData = await response.json();
   console.log("forecast");
   console.log(forecastData);
   displayDailyForecast(forecastData);
-  //    "https://api.openweathermap.org/data/2.5/forecast?q=Tampa&&units=imperial&appid=3dc68dfc31905e08624208e02dc62e0e",
 }
 
 function displayDailyForecast(forecastData) {
@@ -82,11 +78,7 @@ function displayDailyForecast(forecastData) {
   temp0.innerHTML = forecastData.list[0].main.temp + "\u00B0" + "F";
   rain0.innerHTML = forecastData.list[0].pop * 100 + "%";
 
-  time1.innerHTML = format(
-    new Date(forecastData.list[1].dt_txt),
-    "haaa"
-    //"MMM eo haaa"
-  );
+  time1.innerHTML = format(new Date(forecastData.list[1].dt_txt), "haaa");
   temp1.innerHTML = forecastData.list[1].main.temp + "\u00B0" + "F";
   rain1.innerHTML = forecastData.list[1].pop * 100 + "%";
 
@@ -96,7 +88,5 @@ function displayDailyForecast(forecastData) {
 }
 
 getCurrentWeather("Tampa");
-getWeatherForecast();
+getWeatherForecast("Tampa");
 assignSubmitBtn();
-
-//"MMM/eo/K/aaa"
