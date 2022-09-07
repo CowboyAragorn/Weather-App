@@ -1,3 +1,12 @@
+:root {
+  --jonquil: #f0c808ff;
+  --steel-teal: #62929eff;
+  --papaya-whip: #fff1d0ff;
+  --orange-red: #f26419ff;
+  --black-coffee: #2e1f27ff;
+  --margin-left-line: 50px;
+}
+
 html {
   width: 100%;
   height: 100%;
@@ -11,9 +20,10 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
+  background-color: var(--steel-teal);
 }
 header {
-  background-color: black;
+  /* background-color: black; */
   height: fit-content;
   color: white;
   display: grid;
@@ -26,7 +36,8 @@ header {
   flex-direction: column;
   align-items: left;
   justify-content: left;
-  margin-left: 15px;
+  margin-left: var(--margin-left-line);
+  margin-top: 25px;
 }
 #headerWrapper > * {
   margin: 0;
@@ -36,22 +47,28 @@ header {
   display: flex;
   font-size: 3rem;
   align-items: center;
-  gap: 15px;
+  gap: 25px;
+}
+#currentWeatherIcon {
+  color: var(--orange-red);
 }
 #cityWrapper > * {
   margin: 0;
 }
 #temperature {
   font-size: 7rem;
+  color: var(--jonquil);
 }
 
 #weatherRow {
   display: flex;
-  border: 1pt solid black;
   align-items: left;
   justify-content: left;
   gap: 20px;
-  font-size: 12pt;
+}
+/*targeting just the data, not the h2 */
+#weatherRow > * > :nth-child(2n) {
+  font-size: 2rem;
 }
 #inputWrapper {
   display: flex;
@@ -76,9 +93,20 @@ input {
   margin: 0;
 }
 
+#hr {
+  background-color: var(--jonquil);
+  font-size: 50px;
+  height: 1px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  margin-top: 15px;
+}
+
 section {
   height: 80%;
-  background-color: white;
+  /* background-color: black; */
   margin: 0;
   display: grid;
 }
@@ -87,21 +115,18 @@ section {
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: center;
+  justify-content: end;
   align-items: flex-start;
   gap: 15px;
 }
 .dailyForecastBox {
   display: flex;
   flex-direction: column;
-  background-color: white;
-  border: 1pt solid black;
   color: white;
-  background-color: black;
   height: fit-content;
   width: fit-content;
   display: flex;
-  margin-left: 15px;
+  margin-left: var(--margin-left-line);
   gap: 10px;
 }
 .dayForecastHeader {
@@ -125,15 +150,17 @@ section {
 }
 
 .time {
-  font-size: 2.5rem;
+  font-size: 3rem;
 }
 .forecastIcon {
-  font-size: 2.5rem;
+  font-size: 3rem;
   margin-right: 25px;
+  color: var(--orange-red);
 }
 .temp {
-  font-size: 1rem;
+  font-size: 2rem;
+  color: var(--jonquil);
 }
 .rain {
-  font-size: 1rem;
+  font-size: 2rem;
 }
