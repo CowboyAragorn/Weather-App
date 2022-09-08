@@ -3,6 +3,9 @@ import format from "date-fns/format";
 import "./css/style.css";
 import "./css/weather-icons.min.css";
 //pass in city, then call display weather with fetched data//
+
+let mapFlag;
+
 async function getCurrentWeather(currentCity) {
   let apiLink =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -14,6 +17,8 @@ async function getCurrentWeather(currentCity) {
   console.log("current weather data");
   console.log(weatherData);
   displayWeather(weatherData);
+  getMap(weatherData);
+  //changeMap(weatherData);
 }
 
 //display the weather on the DOM//
@@ -46,8 +51,10 @@ function displayWeather(weatherData) {
 function changeCity() {
   const textInput = document.querySelector("#textInput");
   let currentCity = textInput.value;
+  textInput.value = "";
   getCurrentWeather(currentCity);
   getWeatherForecast(currentCity);
+  getWeeklyForecast(currentCity);
 }
 
 //assign change city to the submit button//
@@ -92,7 +99,7 @@ function displayDailyForecast(forecastData) {
     "wi-owm-" + forecastData.list[0].weather[0].id
   );
   temp0.innerHTML = Math.round(forecastData.list[0].main.temp) + "\u00B0" + "F";
-  rain0.innerHTML = forecastData.list[0].pop * 100 + "%";
+  rain0.innerHTML = Math.round(forecastData.list[0].pop * 100) + "%";
 
   time1.innerHTML = format(new Date(forecastData.list[1].dt_txt), "haaa");
   forecastIcon1.removeAttribute("class");
@@ -102,7 +109,7 @@ function displayDailyForecast(forecastData) {
     "wi-owm-" + forecastData.list[1].weather[0].id
   );
   temp1.innerHTML = Math.round(forecastData.list[1].main.temp) + "\u00B0" + "F";
-  rain1.innerHTML = forecastData.list[1].pop * 100 + "%";
+  rain1.innerHTML = Math.round(forecastData.list[1].pop * 100) + "%";
 
   time2.innerHTML = format(new Date(forecastData.list[2].dt_txt), "haaa");
   forecastIcon2.removeAttribute("class");
@@ -112,7 +119,7 @@ function displayDailyForecast(forecastData) {
     "wi-owm-" + forecastData.list[2].weather[0].id
   );
   temp2.innerHTML = Math.round(forecastData.list[2].main.temp) + "\u00B0" + "F";
-  rain2.innerHTML = forecastData.list[2].pop * 100 + "%";
+  rain2.innerHTML = Math.round(forecastData.list[2].pop * 100) + "%";
 }
 
 //whoo boy, this one is not optimized//
@@ -128,6 +135,7 @@ async function getWeeklyForecast(currentCity) {
   const dateArray = [];
   const sortedDatesArray = [];
   const filteredFinalDatesArray = [];
+  let highAndLowArray = [];
 
   for (let i = 0; i < weeklyForecastData.list.length; i++) {
     dateArray.push(weeklyForecastData.list[i].dt_txt);
@@ -147,6 +155,7 @@ async function getWeeklyForecast(currentCity) {
     }
   }
 
+  //formatted dates is used for easy comparison, date array is the full date//
   function sortDays(i) {
     let tempArray = [];
     while (i < dateArray.length) {
@@ -155,17 +164,47 @@ async function getWeeklyForecast(currentCity) {
         tempArray.push(dateArray[i]);
       } else if (formattedDates[i] != formattedDates[incrementedVal]) {
         tempArray.push(dateArray[i]);
-        // console.log(tempArray);
 
         const median = Math.floor(tempArray.length / 2);
-
         sortedDatesArray.push(tempArray[median]);
+        console.log(tempArray);
+        highAndLow(tempArray, highAndLowArray);
         tempArray = [];
       }
       i++;
     }
-    // console.log(sortedDatesArray);
+    console.log(highAndLowArray);
     filterMainList();
+  }
+
+  function highAndLow(tempArray, highAndLowArray) {
+    let arr = [];
+    let incrementedVal = 0;
+    console.log(weeklyForecastData.list.length);
+    for (let p = 0; p < weeklyForecastData.list.length; p++) {
+      if (weeklyForecastData.list[p].dt_txt == tempArray[incrementedVal]) {
+        arr.push(weeklyForecastData.list[p].main.temp);
+        incrementedVal++;
+      }
+    } //insertion sort
+    for (let i = 1; i < arr.length; i++) {
+      let curr = arr[i];
+      let j = i - 1;
+
+      while (j >= 0 && arr[j] > curr) {
+        arr[j + 1] = arr[j];
+        j--;
+      }
+      arr[j + 1] = curr;
+    }
+    console.log(arr);
+    const highAndLowVals = {
+      low: arr[0],
+      high: arr[arr.length - 1],
+    };
+    highAndLowArray.push(highAndLowVals);
+    console.log(arr[0]);
+    console.log(arr[arr.length - 1]);
   }
 
   function filterMainList() {
@@ -178,7 +217,70 @@ async function getWeeklyForecast(currentCity) {
         incrementedVal++;
       }
     }
-    //console.log(filteredFinalDatesArray);
+    displayWeeklyForecast(filteredFinalDatesArray, highAndLowArray);
+  }
+}
+
+function displayWeeklyForecast(filteredFinalDatesArray, highAndLowArray) {
+  let weekForecast = document.getElementById("weekForecast");
+  //clears every pass//
+  while (weekForecast.childElementCount > 0) {
+    weekForecast.removeChild(weekForecast.firstElementChild);
+  }
+  for (let i = 0; i < filteredFinalDatesArray.length; i++) {
+    let weeklyForecastBox = document.createElement("div");
+    weeklyForecastBox.classList.add = "weeklyForecastBox";
+    //currentWeatherIcon.classList.add("wi", "wi-owm-" + currentWeatherIconId);
+    let dayOfWeek = format(new Date(filteredFinalDatesArray[i].dt_txt), "iiii");
+    let weatherId = filteredFinalDatesArray[i].weather[0].id;
+    let weatherDisplay = document.createElement("div");
+    weatherDisplay.classList.add(
+      "weatherIconWeekly",
+      "wi",
+      "wi-owm-" + weatherId
+    );
+
+    console.log(highAndLowArray[i].low);
+    let lowTemp = highAndLowArray[i].low;
+    let lowTempDisplay = document.createElement("div");
+    lowTempDisplay.innerHTML = lowTemp;
+
+    let highTemp = highAndLowArray[i].high;
+    let highTempDisplay = document.createElement("div");
+    highTempDisplay.innerHTML = highTemp;
+
+    weekForecast.append(weeklyForecastBox);
+    weeklyForecastBox.append(dayOfWeek);
+    weeklyForecastBox.append(weatherDisplay);
+    weeklyForecastBox.append(lowTempDisplay);
+    weeklyForecastBox.append(highTempDisplay);
+  }
+}
+
+//called in get current weather//
+function getMap(weatherData) {
+  console.log("mapFlag");
+  console.log(map);
+  let lat = weatherData.coord.lat;
+  let lon = weatherData.coord.lon;
+  if (mapFlag === true) {
+    let mapToRemove = document.getElementById("map");
+    mapToRemove.remove();
+    let remake = document.createElement("div");
+    remake.id = "map";
+    inputWrapper.prepend(remake);
+    let map = L.map("map").setView([lat, lon], 9);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "© OpenStreetMap",
+    }).addTo(map);
+  } else {
+    let map = L.map("map").setView([lat, lon], 9);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "© OpenStreetMap",
+    }).addTo(map);
+    mapFlag = true;
   }
 }
 
