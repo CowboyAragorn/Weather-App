@@ -230,8 +230,13 @@ function displayWeeklyForecast(filteredFinalDatesArray, highAndLowArray) {
   for (let i = 0; i < filteredFinalDatesArray.length; i++) {
     let weeklyForecastBox = document.createElement("div");
     weeklyForecastBox.classList.add = "weeklyForecastBox";
-    //currentWeatherIcon.classList.add("wi", "wi-owm-" + currentWeatherIconId);
-    let dayOfWeek = format(new Date(filteredFinalDatesArray[i].dt_txt), "iiii");
+
+    let dayAndIconContainer = document.createElement("div");
+    dayAndIconContainer.classList.add("dayAndIconContainer");
+    let dayOfWeek = format(new Date(filteredFinalDatesArray[i].dt_txt), "iii");
+    let dayOfWeekDisplay = document.createElement("p");
+    dayOfWeekDisplay.classList.add("dayOfWeek");
+    dayOfWeekDisplay.innerHTML = dayOfWeek;
     let weatherId = filteredFinalDatesArray[i].weather[0].id;
     let weatherDisplay = document.createElement("div");
     weatherDisplay.classList.add(
@@ -240,20 +245,34 @@ function displayWeeklyForecast(filteredFinalDatesArray, highAndLowArray) {
       "wi-owm-" + weatherId
     );
 
+    let highAndLowContainer = document.createElement("div");
+    highAndLowContainer.classList.add("highAndLowContainer");
     console.log(highAndLowArray[i].low);
-    let lowTemp = highAndLowArray[i].low;
-    let lowTempDisplay = document.createElement("div");
+    let lowTemp = Math.round(highAndLowArray[i].low) + "\u00B0" + "F";
+    let lowHeader = document.createElement("h3");
+    lowHeader.classList.add("highAndLowHeader");
+    lowHeader.innerHTML = "Low";
+    let lowTempDisplay = document.createElement("p");
     lowTempDisplay.innerHTML = lowTemp;
+    lowTempDisplay.classList.add("low");
 
-    let highTemp = highAndLowArray[i].high;
-    let highTempDisplay = document.createElement("div");
+    let highHeader = document.createElement("h3");
+    highHeader.classList.add("highAndLowHeader");
+    highHeader.innerHTML = "High";
+    let highTemp = Math.round(highAndLowArray[i].high) + "\u00B0" + "F";
+    let highTempDisplay = document.createElement("p");
     highTempDisplay.innerHTML = highTemp;
+    highTempDisplay.classList.add("high");
 
     weekForecast.append(weeklyForecastBox);
-    weeklyForecastBox.append(dayOfWeek);
-    weeklyForecastBox.append(weatherDisplay);
-    weeklyForecastBox.append(lowTempDisplay);
-    weeklyForecastBox.append(highTempDisplay);
+    weeklyForecastBox.append(dayAndIconContainer);
+    dayAndIconContainer.append(dayOfWeekDisplay);
+    dayAndIconContainer.append(weatherDisplay);
+    weeklyForecastBox.append(highAndLowContainer);
+    highAndLowContainer.append(highHeader);
+    highAndLowContainer.append(lowHeader);
+    highAndLowContainer.append(highTempDisplay);
+    highAndLowContainer.append(lowTempDisplay);
   }
 }
 
