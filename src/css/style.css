@@ -6,7 +6,7 @@
   --orange-red: #f26419ff;
   --black-coffee: #2e1f27ff;
   --margin-left-line: 50px;
-  --margin-bottom: 20px;
+  --margin-bottom: 50px;
 }
 
 html {
@@ -47,7 +47,7 @@ header {
 
 #cityWrapper {
   display: flex;
-  font-size: 3rem;
+  font-size: 3.3rem;
   align-items: center;
   gap: 25px;
 }
@@ -58,7 +58,7 @@ header {
   margin: 0;
 }
 #temperature {
-  font-size: 7rem;
+  font-size: 8rem;
   color: var(--jonquil);
 }
 
@@ -70,7 +70,7 @@ header {
 }
 /*targeting just the data, not the h2 */
 #weatherRow > * > :nth-child(2n) {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 #inputWrapper {
   display: flex;
@@ -84,35 +84,36 @@ header {
 #map {
   display: flex;
   height: 200px;
-  width: 300px;
+  width: 350px;
 }
 #inputRow {
   position: relative;
   display: flex;
   justify-content: end;
   width: 100%;
-  height: 50px;
+  height: 70px;
 }
 ::placeholder {
   color: white;
 }
-input::after {
-  border: none;
-}
+
 input {
   position: relative;
   background-color: var(--dark-teal);
   color: white;
-
+  padding-left: 15px;
   border: none;
   border-radius: 15px;
-  padding: 15pt;
   width: 75%;
-  height: 20%;
-  font-size: 1.3rem;
+  height: 100%;
+  font-size: 1.8rem;
+}
+input:focus {
+  border: none;
+  outline: none;
 }
 #submitBtn {
-  font-size: 1rem;
+  font-size: 1.5rem;
   position: absolute;
   top: 33%;
   right: 2%;
@@ -184,41 +185,48 @@ section {
 .tempRainContainer > * > * {
   margin: 0;
 }
+.forecastDetailsFlex > :nth-child(1) {
+  font-size: 2rem;
+}
 
 .time {
-  font-size: 3rem;
+  font-size: 3.3rem;
 }
 .forecastIcon {
-  font-size: 3rem;
+  font-size: 3.3rem;
   margin-right: 25px;
   color: var(--orange-red);
 }
 .temp {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: var(--jonquil);
 }
 .rain {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 #weekForecast {
   /*
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-auto-flow: column;
   margin-right: var(--margin-left-line);
   margin-bottom: var(--margin-bottom);
-  justify-items: start;
+  justify-items: end;
+  align-content: end;
   align-items: end;
+  column-gap: 40px;
   */
+
   display: flex;
   justify-content: right;
   align-items: flex-end;
   margin-top: 25px;
+  flex-wrap: wrap;
   gap: 40px;
+
   color: white;
   margin-right: var(--margin-left-line);
   margin-bottom: var(--margin-bottom);
-  flex-wrap: wrap;
 }
 
 .dayAndIconContainer {
@@ -231,13 +239,13 @@ section {
 }
 
 .dayOfWeek {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   color: var(--jonquil);
 }
 
 .weatherIconWeekly {
   color: var(--orange-red);
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 .highAndLowContainer {
@@ -251,12 +259,12 @@ section {
 }
 
 .highAndLowHeader {
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: white;
 }
 .high,
 .low {
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   color: var(--jonquil);
 }
 
